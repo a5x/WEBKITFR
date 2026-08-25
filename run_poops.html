@@ -5,20 +5,21 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ps4 poops</title>
 <style>
-  html, body { margin:0; padding:0; background:#0b0d10; color:#c8ced8;
-               font:15px/1.45 "Segoe UI", system-ui, sans-serif; }
-  #wrap { padding:16px 18px; }
-  #state { font-size:22px; font-weight:700; margin:0 0 10px; }
-  #out { white-space:pre-wrap; font:12px/1.45 Consolas, monospace;
-         background:#11151b; border:1px solid #1e2732; border-radius:5px;
-         padding:10px 12px; height:calc(100vh - 141px); overflow-y:auto; }
-  .ok { color:#7fd0a0; } .bad { color:#d08a7f; } .warn { color:#d8c07f; }
-  #brand { text-align:center; padding:8px 10px; background:#0e1116;
-           border-bottom:1px solid #1e2732; }
-  #brand img { width:28px; height:28px; margin-right:8px; border-radius:50%;
+    :root { --bg:#090d0d; --panel:#101817; --line:#263835; --text:#dce7e2; --muted:#82938d; --green:#91e0b1; }
+    * { box-sizing:border-box; }
+    html, body { margin:0; min-height:100%; background:radial-gradient(circle at 85% 0%, #18302a 0, transparent 32%), var(--bg);
+       color:var(--text); font:15px/1.45 "Segoe UI", system-ui, sans-serif; }
+    #wrap { width:calc(100% - 36px); margin:24px auto; }
+    #state { font-size:25px; line-height:1.2; font-weight:700; margin:0 0 14px; }
+    #out { white-space:pre-wrap; font:12px/1.55 Consolas, monospace; color:#b8c9c2;
+      background:rgba(10,17,16,.95); border:1px solid var(--line); border-radius:8px;
+      padding:16px; height:calc(100vh - 128px); min-height:240px; overflow-y:auto; box-shadow:0 14px 36px rgba(0,0,0,.25); }
+    .ok { color:var(--green); } .bad { color:#e49a8f; } .warn { color:#e3c47d; }
+    #brand { text-align:center; padding:12px 10px; background:#0b1211; border-bottom:1px solid var(--line); }
+    #brand img { width:30px; height:30px; margin-right:9px; border-radius:50%;
                vertical-align:middle; }
-  #brand b { font-size:15px; font-weight:700; letter-spacing:.14em;
-             color:#e6ebf2; vertical-align:middle; }
+    #brand b { font-size:14px; font-weight:700; letter-spacing:.16em; color:var(--text); vertical-align:middle; }
+    @media (max-width:520px) { #wrap { width:calc(100% - 24px); margin:18px auto; } #state { font-size:22px; } #out { padding:12px; } }
 </style>
 </head>
 <body>

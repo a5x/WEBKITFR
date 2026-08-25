@@ -5,31 +5,36 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ps4 jailbreak</title>
 <style>
-  html, body { margin:0; padding:0; background:#0b0d10; color:#c8ced8;
-               font:15px/1.45 "Segoe UI", system-ui, sans-serif; }
-  #wrap { padding:16px 18px; }
-  #state { font-size:22px; font-weight:700; margin:0 0 6px; }
-  #det { font-size:13px; color:#8b95a3; margin:0 0 4px; }
-  #det b { color:#c8ced8; font-weight:600; }
-  #cache { font-size:12px; color:#5c6672; margin:0 0 10px; min-height:14px; }
-  #cache.cacheok { color:#7fd0a0; }
-    #chooser { margin-top:18px; max-width:420px; }
-    #chooser-title { margin:0 0 8px; font-size:14px; font-weight:600; color:#e6ebf2; }
-    .choice { display:block; margin:7px 0; padding:10px 12px; border:1px solid #1e2732;
-                        border-radius:5px; background:#11151b; cursor:pointer; }
-    .choice.selected { border-color:#7fd0a0; background:#142019; }
-    .choice input { margin:0 8px 0 0; vertical-align:middle; }
-    #start { margin-top:12px; padding:10px 16px; border:0; border-radius:5px;
-                     background:#7fd0a0; color:#0b0d10; font:600 15px "Segoe UI", system-ui, sans-serif;
-                     cursor:pointer; }
-    #start:disabled { background:#39434d; color:#818b96; cursor:default; }
-  .ok { color:#7fd0a0; } .bad { color:#d08a7f; } .warn { color:#d8c07f; }
-  #brand { text-align:center; padding:8px 10px; background:#0e1116;
-           border-bottom:1px solid #1e2732; }
-  #brand img { width:28px; height:28px; margin-right:8px; border-radius:50%;
+  :root { --bg:#090d0d; --panel:#101817; --line:#263835; --text:#dce7e2;
+      --muted:#82938d; --green:#91e0b1; --amber:#e3c47d; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; min-height:100%; background:radial-gradient(circle at 80% 0%, #18302a 0, transparent 34%), var(--bg);
+           color:var(--text); font:15px/1.45 "Segoe UI", system-ui, sans-serif; }
+  #wrap { width:min(100% - 36px, 620px); margin:38px auto; padding:28px; border:1px solid var(--line);
+      border-radius:10px; background:rgba(16,24,23,.94); box-shadow:0 18px 50px rgba(0,0,0,.3); }
+  #state { font-size:25px; line-height:1.2; font-weight:700; margin:0 0 9px; color:var(--text); }
+  #det { font-size:13px; color:var(--muted); margin:0 0 4px; }
+  #det b { color:var(--text); font-weight:600; }
+  #cache { font-size:12px; color:#647570; margin:0 0 22px; min-height:14px; }
+  #cache.cacheok { color:var(--green); }
+  #chooser { padding-top:20px; border-top:1px solid var(--line); }
+  #chooser-title { margin:0 0 10px; font-size:13px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); }
+  .choice { display:block; margin:8px 0; padding:13px 15px; border:1px solid var(--line);
+        border-radius:6px; background:#0d1413; cursor:pointer; transition:background .15s, border-color .15s; }
+  .choice:hover { border-color:#4b6d60; }
+  .choice.selected { border-color:var(--green); background:#14271e; color:#f0fff5; }
+  .choice input { margin:0 10px 0 0; accent-color:var(--green); vertical-align:middle; }
+  #start { margin-top:14px; width:100%; padding:13px 16px; border:0; border-radius:6px;
+       background:var(--green); color:#08110d; font:700 14px "Segoe UI", system-ui, sans-serif;
+       letter-spacing:.1em; cursor:pointer; }
+  #start:hover { background:#b0efc7; }
+  #start:disabled { background:#35463f; color:#81928a; cursor:default; }
+  .ok { color:var(--green); } .bad { color:#e49a8f; } .warn { color:var(--amber); }
+  #brand { text-align:center; padding:12px 10px; background:#0b1211; border-bottom:1px solid var(--line); }
+  #brand img { width:30px; height:30px; margin-right:9px; border-radius:50%;
                vertical-align:middle; }
-  #brand b { font-size:15px; font-weight:700; letter-spacing:.14em;
-             color:#e6ebf2; vertical-align:middle; }
+  #brand b { font-size:14px; font-weight:700; letter-spacing:.16em; color:var(--text); vertical-align:middle; }
+  @media (max-width:520px) { #wrap { width:calc(100% - 24px); margin:18px auto; padding:20px; } #state { font-size:22px; } }
 </style>
 </head>
 <body>
@@ -40,8 +45,8 @@
   <div id="cache"></div>
     <div id="chooser">
         <p id="chooser-title">Choisis la chaîne à lancer</p>
-        <label class="choice"><input type="radio" name="bug" value="lapse"> LAPSE</label>
-        <label class="choice"><input type="radio" name="bug" value="poops"> POOPS</label>
+        <label class="choice"><input type="radio" name="bug" value="lapse"> LAPSE 7.00-12.02</label>
+        <label class="choice"><input type="radio" name="bug" value="poops"> POOPS 9.00-13.00</label>
         <button id="start" type="button" disabled>START JAILBREAK</button>
     </div>
 </div>
