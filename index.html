@@ -30,26 +30,29 @@
   #start:hover { background:#b0efc7; }
   #start:disabled { background:#35463f; color:#81928a; cursor:default; }
   .ok { color:var(--green); } .bad { color:#e49a8f; } .warn { color:var(--amber); }
-  #brand { text-align:center; padding:12px 10px; background:#0b1211; border-bottom:1px solid var(--line); }
-  #brand img { width:30px; height:30px; margin-right:9px; border-radius:50%;
-               vertical-align:middle; }
-  #brand b { font-size:14px; font-weight:700; letter-spacing:.16em; color:var(--text); vertical-align:middle; }
-  @media (max-width:520px) { #wrap { width:calc(100% - 24px); margin:18px auto; padding:20px; } #state { font-size:22px; } }
+    #brand { text-align:center; padding:20px 10px 18px; background:#0b1211; border-bottom:1px solid var(--line); }
+    #brand img { display:block; width:58px; height:58px; margin:0 auto 11px; border-radius:50%; }
+    #brand b { font-size:15px; font-weight:700; letter-spacing:.16em; color:var(--text); vertical-align:middle; }
+    #credit { padding:0 18px 18px; text-align:center; font-size:11px; color:var(--muted); }
+    #credit a { color:var(--green); text-decoration:none; }
+    #credit a:hover { text-decoration:underline; }
+    @media (max-width:520px) { #wrap { width:calc(100% - 24px); margin:18px auto; padding:20px; } #state { font-size:22px; } #brand img { width:50px; height:50px; } }
 </style>
 </head>
 <body>
-<div id="brand"><img src="logo_raw.png" alt="" width="28" height="28"><b>PS4 Webkit Version FR</b></div>
+<div id="brand"><img src="logo_raw.png" alt="" width="28" height="28"><b>PS4 Webkit 7.00-13.00</b></div>
 <div id="wrap">
-  <div id="state">Détection de la MAJ...</div>
+    <div id="state">Detecting firmware update...</div>
   <div id="det"></div>
   <div id="cache"></div>
     <div id="chooser">
-        <p id="chooser-title">Choisis la chaîne à lancer</p>
+        <p id="chooser-title">Choose the exploit chain to launch</p>
         <label class="choice"><input type="radio" name="bug" value="lapse"> LAPSE 7.00-12.02</label>
         <label class="choice"><input type="radio" name="bug" value="poops"> POOPS 9.00-13.00</label>
         <button id="start" type="button" disabled>START JAILBREAK</button>
     </div>
 </div>
+<div id="credit">Based on WebKit code by <a href="https://github.com/w90008">github.com/w90008</a></div>
 
 <script>
 (function () {
@@ -104,8 +107,8 @@
             if (choices[j].value === bug) choices[j].checked = true;
         refreshStart();
     }
-    if (!key && !params.get("bug")) setState("MAJ NON SUPPORTER", "bad");
-    else setState("Sélectionne un exploit", "warn");
+    if (!key && !params.get("bug")) setState("FIRMWARE NOT SUPPORTED", "bad");
+    else setState("Select an exploit", "warn");
 
     function go() {
         var selected = selectedBug();
@@ -134,14 +137,14 @@
         setCache("cache unavailable");
     } else if (!navigator.onLine) {
         setCache("offline -- from cache", true);
-        setState("Sélectionne un exploit", "warn");
+        setState("Select an exploit", "warn");
     } else if (ac.status === ac.IDLE) {
         setCache("cached", true);
-        setState("Sélectionne un exploit", "warn");
+        setState("Select an exploit", "warn");
     } else if (ac.status === ac.UPDATEREADY) {
         try { ac.swapCache(); } catch (e) {}
         setCache("update downloaded", true);
-        waitForTap("PRET - APPUIE SUR X POUR CONTINUER",
+        waitForTap("READY - PRESS X TO CONTINUE",
                    function () { location.reload(); });
     } else {
         setCache("checking cache...");
@@ -154,26 +157,26 @@
 
         ac.addEventListener("cached", function () {
             setCache("cached for offline use", true);
-            setState("Sélectionne un exploit", "warn");
+            setState("Select an exploit", "warn");
         }, false);
         ac.addEventListener("updateready", function () {
             try { ac.swapCache(); } catch (e) {}
             setCache("update downloaded", true);
-            waitForTap("PRET - APPUIE SUR X POUR CONTINUER",
+            waitForTap("READY - PRESS X TO CONTINUE",
                        function () { location.reload(); });
         }, false);
 
         ac.addEventListener("noupdate", function () {
             setCache("cached -- offline ready", true);
-            setState("Sélectionne un exploit", "warn");
+            setState("Select an exploit", "warn");
         }, false);
         ac.addEventListener("error", function () {
             setCache("cache unavailable");
-            setState("Sélectionne un exploit", "warn");
+            setState("Select an exploit", "warn");
         }, false);
         ac.addEventListener("obsolete", function () {
             setCache("cache obsolete");
-            setState("Sélectionne un exploit", "warn");
+            setState("Select an exploit", "warn");
         }, false);
     }
 })();
