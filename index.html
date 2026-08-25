@@ -13,6 +13,16 @@
   #det b { color:#c8ced8; font-weight:600; }
   #cache { font-size:12px; color:#5c6672; margin:0 0 10px; min-height:14px; }
   #cache.cacheok { color:#7fd0a0; }
+    #chooser { margin-top:18px; max-width:420px; }
+    #chooser-title { margin:0 0 8px; font-size:14px; font-weight:600; color:#e6ebf2; }
+    .choice { display:block; margin:7px 0; padding:10px 12px; border:1px solid #1e2732;
+                        border-radius:5px; background:#11151b; cursor:pointer; }
+    .choice.selected { border-color:#7fd0a0; background:#142019; }
+    .choice input { margin:0 8px 0 0; vertical-align:middle; }
+    #start { margin-top:12px; padding:10px 16px; border:0; border-radius:5px;
+                     background:#7fd0a0; color:#0b0d10; font:600 15px "Segoe UI", system-ui, sans-serif;
+                     cursor:pointer; }
+    #start:disabled { background:#39434d; color:#818b96; cursor:default; }
   .ok { color:#7fd0a0; } .bad { color:#d08a7f; } .warn { color:#d8c07f; }
   #brand { text-align:center; padding:8px 10px; background:#0e1116;
            border-bottom:1px solid #1e2732; }
@@ -23,11 +33,17 @@
 </style>
 </head>
 <body>
-<div id="brand"><img src="logo_raw.png" alt="" width="28" height="28"><b>PS4 Webkit VVersion FR</b></div>
+<div id="brand"><img src="logo_raw.png" alt="" width="28" height="28"><b>PS4 Webkit Version FR</b></div>
 <div id="wrap">
   <div id="state">Détection de la MAJ...</div>
   <div id="det"></div>
   <div id="cache"></div>
+    <div id="chooser">
+        <p id="chooser-title">Choisis la chaîne à lancer</p>
+        <label class="choice"><input type="radio" name="bug" value="lapse"> LAPSE</label>
+        <label class="choice"><input type="radio" name="bug" value="poops"> POOPS</label>
+        <button id="start" type="button" disabled>START JAILBREAK</button>
+    </div>
 </div>
 
 <script>
@@ -35,8 +51,22 @@
     var stateEl = document.getElementById("state");
     var detEl = document.getElementById("det");
     var cacheEl = document.getElementById("cache");
+    var startEl = document.getElementById("start");
+    var choices = document.querySelectorAll('input[name="bug"]');
+    var choiceLabels = document.querySelectorAll(".choice");
     function setState(t, c) { stateEl.textContent = t; stateEl.className = c || ""; }
     function setCache(t, ok) { cacheEl.textContent = t; cacheEl.className = ok ? "cacheok" : ""; }
+    function selectedBug() {
+        for (var i = 0; i < choices.length; i++)
+            if (choices[i].checked) return choices[i].value;
+        return null;
+    }
+    function refreshStart() {
+        startEl.disabled = !selectedBug();
+        for (var i = 0; i < choiceLabels.length; i++)
+            choiceLabels[i].className = choices[i].checked ? "choice selected" : "choice";
+    }
+    for (var i = 0; i < choices.length; i++) choices[i].addEventListener("change", refreshStart);
     var params = new URLSearchParams(location.search);
 
     var key = null, fwnum = null;
@@ -64,12 +94,24 @@
     detEl.innerHTML = "firmware <b>" + (key || "unknown") + "</b>"
         + " &middot; bug <b>" + (bug || "none") + "</b> &middot; " + why;
 
-    if (!bug) { setState("MAJ NON SUPPORTER", "bad"); return; }
+    if (bug) {
+        for (var j = 0; j < choices.length; j++)
+            if (choices[j].value === bug) choices[j].checked = true;
+        refreshStart();
+    }
+    if (!key && !params.get("bug")) setState("MAJ NON SUPPORTER", "bad");
+    else setState("Sélectionne un exploit", "warn");
 
-    var target = (bug === "lapse" ? "run_lapse.html" : "run_poops.html")
-        + location.search;
-    function go() { setState("loading " + bug + " chain...", "warn");
+    function go() {
+        var selected = selectedBug();
+        if (!selected) return;
+        var nextParams = new URLSearchParams(location.search);
+        nextParams.set("bug", selected);
+        var target = (selected === "lapse" ? "run_lapse.html" : "run_poops.html")
+            + "?" + nextParams.toString();
+        setState("loading " + selected + " chain...", "warn");
                     location.replace(target); }
+    startEl.addEventListener("click", go);
 
     function waitForTap(msg, action) {
         setState(msg, "warn");
@@ -84,13 +126,13 @@
 
     var ac = window.applicationCache;
     if (!ac || !document.documentElement.hasAttribute("manifest")) {
-        go();
+        setCache("cache unavailable");
     } else if (!navigator.onLine) {
         setCache("offline -- from cache", true);
-        go();
+        setState("Sélectionne un exploit", "warn");
     } else if (ac.status === ac.IDLE) {
         setCache("cached", true);
-        go();
+        setState("Sélectionne un exploit", "warn");
     } else if (ac.status === ac.UPDATEREADY) {
         try { ac.swapCache(); } catch (e) {}
         setCache("update downloaded", true);
@@ -107,7 +149,7 @@
 
         ac.addEventListener("cached", function () {
             setCache("cached for offline use", true);
-            waitForTap("EN CACHE (première fois) - APPUIE SUR X POUR CONTINUER", go);
+            setState("Sélectionne un exploit", "warn");
         }, false);
         ac.addEventListener("updateready", function () {
             try { ac.swapCache(); } catch (e) {}
@@ -118,15 +160,15 @@
 
         ac.addEventListener("noupdate", function () {
             setCache("cached -- offline ready", true);
-            go();
+            setState("Sélectionne un exploit", "warn");
         }, false);
         ac.addEventListener("error", function () {
             setCache("cache unavailable");
-            waitForTap("ECHEC DU CACHE - RE APPUIE SUR X POUR CONTINUER", go);
+            setState("Sélectionne un exploit", "warn");
         }, false);
         ac.addEventListener("obsolete", function () {
             setCache("cache obsolete");
-            waitForTap("CACHE OBSOLETE - RE APPUIE SUR X POUR CONTINUER", go);
+            setState("Sélectionne un exploit", "warn");
         }, false);
     }
 })();
