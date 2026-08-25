@@ -10,5 +10,6 @@ Supported Version:
 
 Unsupported Version: 
 12.52
+11.52
 
 https://a5x.github.io/ps4webkit/
