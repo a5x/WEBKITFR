@@ -35,6 +35,8 @@
     #brand b { font-size:15px; font-weight:700; letter-spacing:.16em; color:var(--text); vertical-align:middle; }
     #credit { padding:0 18px 18px; text-align:center; font-size:11px; color:var(--muted); }
     #credit a { color:var(--green); text-decoration:none; }
+    #credit .github-link { display:inline-flex; align-items:center; gap:4px; }
+    #credit .github-mark { width:13px; height:13px; filter:invert(82%) sepia(18%) saturate(520%) hue-rotate(91deg) brightness(96%); }
     #credit a:hover { text-decoration:underline; }
     @media (max-width:520px) { #wrap { width:calc(100% - 24px); margin:18px auto; padding:20px; } #state { font-size:22px; } #brand img { width:50px; height:50px; } }
 </style>
@@ -52,8 +54,8 @@
         <button id="start" type="button" disabled>START JAILBREAK</button>
     </div>
 </div>
-<div id="credit">Based on WebKit code by <a href="https://github.com/w90008">github.com/w90008</a><br>
-UI Website made by <a href="https://github.com/a5x">github.com/a5x</a> and Claude</div>
+<div id="credit">Based on WebKit code by <a class="github-link" href="https://github.com/w90008"><img class="github-mark" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub">github.com/w90008</a><br>
+UI Website made by <a class="github-link" href="https://github.com/a5x"><img class="github-mark" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub">github.com/a5x</a> and Claude</div>
 
 <script>
 (function () {
