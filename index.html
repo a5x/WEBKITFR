@@ -18,6 +18,7 @@
   #cache { font-size:12px; color:#647570; margin:0 0 22px; min-height:14px; }
   #cache.cacheok { color:var(--green); }
   #chooser { padding-top:20px; border-top:1px solid var(--line); }
+    #unsupported { margin:0 0 10px; color:#ef7770; font-size:12px; font-weight:700; letter-spacing:.06em; }
   #chooser-title { margin:0 0 10px; font-size:13px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); }
   .choice { display:block; margin:8px 0; padding:13px 15px; border:1px solid var(--line);
         border-radius:6px; background:#0d1413; cursor:pointer; transition:background .15s, border-color .15s; }
@@ -42,12 +43,13 @@
 </style>
 </head>
 <body>
-<div id="brand"><img src="logo_raw.png" alt="" width="28" height="28"><b>PS4 Webkit 7.00-13.00</b></div>
+<div id="brand"><img src="logo_raw.png" alt="" width="28" height="28"><b>PS4 Webkit 11.00-13.00</b></div>
 <div id="wrap">
     <div id="state">Detecting firmware update...</div>
   <div id="det"></div>
   <div id="cache"></div>
     <div id="chooser">
+        <div id="unsupported">UNSUPPORTED VERSION: 12.52, 11.52</div>
         <p id="chooser-title">Choose the exploit chain to launch</p>
         <label class="choice"><input type="radio" name="bug" value="lapse"> LAPSE 7.00-12.02</label>
         <label class="choice"><input type="radio" name="bug" value="poops"> POOPS 9.00-13.00</label>
