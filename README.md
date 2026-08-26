@@ -5,11 +5,12 @@ Supported Version:
 11.00
 11.50
 12.00
+12.02
 12.50
+12.52
 13.00
 
 Unsupported Version: 
-12.52
 11.52
 
 https://a5x.github.io/ps4webkit/
